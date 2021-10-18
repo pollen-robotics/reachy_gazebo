@@ -1,0 +1,1 @@
+# Base package for Gazebo simulation of Reachy (ROS2 foxy)

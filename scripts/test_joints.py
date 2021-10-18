@@ -1,0 +1,86 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+#
+#  File Name	: test_joints.py
+#  Author	: Steve NGUYEN
+#  Contact      : steve.nguyen.000@gmail.com
+#  Created	: Monday, October 18 2021
+#  Revised	:
+#  Version	:
+#  Target MCU	:
+#
+#  This code is distributed under the GNU Public License
+# 		which can be found at http://www.gnu.org/licenses/gpl.txt
+#
+#
+#  Notes:	notes
+#
+
+import rclpy
+from rclpy.node import Node
+
+from sensor_msgs.msg import JointState
+
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.executors import MultiThreadedExecutor
+from threading import Event
+
+from copy import copy
+import tf_transformations
+from geometry_msgs.msg import Quaternion, Point
+import numpy as np
+import time
+import random
+
+JOINTS_NAMES = ['l_shoulder_pitch', 'l_shoulder_roll', 'l_arm_yaw', 'l_elbow_pitch', 'l_forearm_yaw', 'l_wrist_pitch', 'l_wrist_roll', 'r_shoulder_pitch', 'r_shoulder_roll',
+                'r_arm_yaw', 'r_elbow_pitch', 'r_forearm_yaw', 'r_wrist_pitch', 'r_wrist_roll', 'orbita_roll', 'orbita_pitch', 'orbita_yaw', 'l_antenna_joint', 'r_antenna_joint', 'l_gripper', 'r_gripper']
+
+
+class MinimalPublisher(Node):
+
+    def __init__(self):
+        super().__init__('minimal_publisher')
+        self.publisher_ = self.create_publisher(
+            JointTrajectory, '/joint_trajectory_controller/joint_trajectory', 10)
+        self.timer_period = 0.1  # seconds
+        self.timer = self.create_timer(self.timer_period, self.timer_callback)
+        self.i = 0
+        self.logger = self.get_logger()
+        self.t = 0.0
+
+    def timer_callback(self):
+        msg = JointTrajectory()
+        p = JointTrajectoryPoint()
+
+        s = np.radians(5.0)*np.sin(2.0*np.pi*0.5*self.t)
+        # s = 0.0
+        self.t += self.timer_period
+        for j in JOINTS_NAMES:
+            msg.joint_names.append(j)
+            p.positions.append(s)
+
+        msg.points.append(p)
+        self.logger.warn('msg: {}'.format(msg))
+
+        self.publisher_.publish(msg)
+        self.i += 1
+
+
+def main(args=None):
+    rclpy.init(args=args)
+
+    minimal_publisher = MinimalPublisher()
+
+    rclpy.spin(minimal_publisher)
+
+    # Destroy the node explicitly
+    # (optional - otherwise it will be done automatically
+    # when the garbage collector destroys the node object)
+    minimal_publisher.destroy_node()
+    rclpy.shutdown()
+
+
+if __name__ == '__main__':
+    main()

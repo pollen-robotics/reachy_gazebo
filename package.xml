@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>reachy_gazebo_ros2</name>
+  <version>0.2.0</version>
+  <description>
+    Launch files for Reachy in Gazebo ROS 2.
+  </description>
+  <maintainer email="steve.nguyen@pollen-robotics.com">Steve Nguyen</maintainer>
+  <license>Apache-2.0 License</license>
+
+  <author email="steve.nguyen@pollen-robotics.com">Steve Nguyen</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>gazebo_plugins</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>gazebo_ros2_control</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>reachy_description_ros2</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <export>
+      <build_type>ament_cmake</build_type>
+  </export>
+</package>

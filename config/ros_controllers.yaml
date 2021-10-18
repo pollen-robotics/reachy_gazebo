@@ -1,0 +1,233 @@
+reachy:
+  # Publish all joint states
+  # Creates the /joint_states topic necessary in ROS
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+
+
+  #simulation controllers
+  left_arm_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints:
+      - l_shoulder_pitch
+      - l_shoulder_roll
+      - l_arm_yaw
+      - l_elbow_pitch
+      - l_forearm_yaw
+      - l_wrist_pitch
+      - l_wrist_roll
+    gains:
+     l_shoulder_pitch: {p: &kp_default 16000,  d: &kd_default 1, i: &ki_default 2, i_clamp: &ki__clamp_default 2}
+     l_shoulder_roll: {p: *kp_default,  d: *kd_default , i: *ki_default, i_clamp: *ki__clamp_default}
+     l_arm_yaw: {p: *kp_default,  d: *kd_default , i: *ki_default, i_clamp: *ki__clamp_default}
+     l_elbow_pitch: {p: *kp_default,  d: *kd_default , i: *ki_default, i_clamp: *ki__clamp_default}
+     l_forearm_yaw: {p: *kp_default,  d: *kd_default , i: *ki_default, i_clamp: *ki__clamp_default}
+     l_wrist_pitch: {p: *kp_default,  d: *kd_default , i: *ki_default, i_clamp: *ki__clamp_default}
+     l_wrist_roll: {p: *kp_default,  d: *kd_default , i: *ki_default, i_clamp: *ki__clamp_default}
+
+    constraints:
+      goal_time: 30.0
+      stopped_velocity_tolerance: 0.01
+      l_shoulder_pitch:
+        goal: 1.0
+        trajectory: 1.0
+      l_shoulder_roll:
+        goal: 1.0
+        trajectory: 1.0
+      l_arm_yaw:
+        goal: 1.0
+        trajectory: 1.0
+      l_elbow_pitch:
+        goal: 1.0
+        trajectory: 1.0
+      l_forearm_yaw:
+        goal: 1.0
+        trajectory: 1.0
+      l_wrist_pitch:
+        goal: 1.0
+        trajectory: 1.0
+      l_wrist_roll:
+        goal: 1.0
+        trajectory: 1.0
+
+    stop_trajectory_duration: 20.0
+
+  right_arm_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints:
+      - r_shoulder_pitch
+      - r_shoulder_roll
+      - r_arm_yaw
+      - r_elbow_pitch
+      - r_forearm_yaw
+      - r_wrist_pitch
+      - r_wrist_roll
+    gains:
+     r_shoulder_pitch: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     r_shoulder_roll: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     r_arm_yaw: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     r_elbow_pitch: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     r_forearm_yaw: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     r_wrist_pitch: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     r_wrist_roll: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+
+
+  head_controller:
+    type: effort_controllers/JointTrajectoryController
+    joints:
+      - orbita_roll
+      - orbita_pitch
+      - orbita_yaw
+    gains:
+     orbita_roll: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     orbita_pitch: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     orbita_yaw: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+
+
+  # Simu Position Controllers ---------------------------------------
+
+
+  orbita_roll_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: orbita_roll
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  orbita_pitch_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: orbita_pitch
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  orbita_yaw_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: orbita_yaw
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+
+  l_shoulder_pitch_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_shoulder_pitch
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_shoulder_roll_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_shoulder_roll
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_arm_yaw_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_arm_yaw
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_elbow_pitch_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_elbow_pitch
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_forearm_yaw_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_forearm_yaw
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_wrist_pitch_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_wrist_pitch
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_wrist_roll_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_wrist_roll
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_gripper_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_gripper
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  l_antenna_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: l_antenna
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+
+  r_shoulder_pitch_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_shoulder_pitch
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_shoulder_roll_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_shoulder_roll
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_arm_yaw_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_arm_yaw
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_elbow_pitch_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_elbow_pitch
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_forearm_yaw_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_forearm_yaw
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_wrist_pitch_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_wrist_pitch
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_wrist_roll_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_wrist_roll
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_gripper_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_gripper
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+  r_antenna_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: r_antenna
+    pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
+
+controller_manager_ns: reachy
+
+controller_list:
+  - name: "/reachy/left_arm_controller"
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - l_shoulder_pitch
+      - l_shoulder_roll
+      - l_arm_yaw
+      - l_elbow_pitch
+      - l_forearm_yaw
+      - l_wrist_pitch
+      - l_wrist_roll
+  - name: "/reachy/right_arm_controller"
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - r_shoulder_pitch
+      - r_shoulder_roll
+      - r_arm_yaw
+      - r_elbow_pitch
+      - r_forearm_yaw
+      - r_wrist_pitch
+      - r_wrist_roll
+  - name: "/reachy/head_controller"
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - orbita_roll
+      - orbita_pitch
+      - orbita_yaw
