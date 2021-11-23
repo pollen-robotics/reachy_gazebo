@@ -87,6 +87,23 @@ def generate_launch_description():
                                    '-entity', 'reachy'],
                         output='screen')
 
+    robot_controllers = PathJoinSubstitution(
+        [
+            FindPackageShare("reachy_gazebo_ros2"),
+            "config",
+            "reachy_gazebo_controllers.yaml",
+        ]
+    )
+    control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[robot_description, robot_controllers],
+        output={
+            "stdout": "screen",
+            "stderr": "screen",
+        },
+    )
+
     load_joint_state_controller = ExecuteProcess(
         cmd=['ros2', 'control', 'load_start_controller', 'joint_state_controller'],
         output='screen'
@@ -97,6 +114,8 @@ def generate_launch_description():
              'joint_trajectory_controller'],
         output='screen'
     )
+
+
 
     # Static TF
     static_tf = Node(package='tf2_ros',
@@ -119,6 +138,7 @@ def generate_launch_description():
             )
         ),
         gazebo,
+        control_node,
         node_robot_state_publisher,
         static_tf,
         spawn_entity

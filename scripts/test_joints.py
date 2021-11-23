@@ -35,7 +35,7 @@ import time
 import random
 
 JOINTS_NAMES = ['l_shoulder_pitch', 'l_shoulder_roll', 'l_arm_yaw', 'l_elbow_pitch', 'l_forearm_yaw', 'l_wrist_pitch', 'l_wrist_roll', 'r_shoulder_pitch', 'r_shoulder_roll',
-                'r_arm_yaw', 'r_elbow_pitch', 'r_forearm_yaw', 'r_wrist_pitch', 'r_wrist_roll', 'orbita_roll', 'orbita_pitch', 'orbita_yaw', 'l_antenna_joint', 'r_antenna_joint', 'l_gripper', 'r_gripper']
+                'r_arm_yaw', 'r_elbow_pitch', 'r_forearm_yaw', 'r_wrist_pitch', 'r_wrist_roll', 'orbita_roll', 'orbita_pitch', 'orbita_yaw', 'l_antenna', 'r_antenna', 'l_gripper', 'r_gripper']
 
 
 class MinimalPublisher(Node):
