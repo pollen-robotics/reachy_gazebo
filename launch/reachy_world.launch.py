@@ -22,6 +22,10 @@ from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEve
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
+from launch.substitutions import PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
+
+
 import xacro
 import yaml
 
@@ -124,6 +128,23 @@ def generate_launch_description():
                      output='log',
                      arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'world', 'pedestal'])
 
+    robot_controllers = PathJoinSubstitution(
+        [
+            FindPackageShare("reachy_gazebo_ros2"),
+            "config",
+            "reachy_gazebo_controllers.yaml",
+        ]
+    )
+    control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[robot_description, robot_controllers],
+        output={
+            "stdout": "screen",
+            "stderr": "screen",
+        },
+    )
+
     return LaunchDescription([
         RegisterEventHandler(
             event_handler=OnProcessExit(
@@ -137,6 +158,7 @@ def generate_launch_description():
                 on_exit=[load_joint_trajectory_controller],
             )
         ),
+        control_node,
         gazebo,
         control_node,
         node_robot_state_publisher,
