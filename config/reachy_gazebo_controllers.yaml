@@ -58,8 +58,8 @@ forward_position_controller:
       - orbita_roll
       - orbita_pitch
       - orbita_yaw
-      - l_antenna_joint
-      - r_antenna_joint
+      - l_antenna
+      - r_antenna
       - r_gripper
       - l_gripper
     interface_name: position

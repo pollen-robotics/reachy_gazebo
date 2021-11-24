@@ -39,7 +39,7 @@ JOINTS_NAMES = ['l_shoulder_pitch', 'l_shoulder_roll', 'l_arm_yaw', 'l_elbow_pit
 
 
 JOINTS_DICT = {'l_shoulder_pitch': 0.0, 'l_shoulder_roll': 0.0, 'l_arm_yaw': 0.0, 'l_elbow_pitch': np.radians(-90.0), 'l_forearm_yaw': 0.0, 'l_wrist_pitch': 0.0, 'l_wrist_roll': 0.0, 'r_shoulder_pitch': 0.0, 'r_shoulder_roll': 0.0,
-               'r_arm_yaw': 0.0, 'r_elbow_pitch': np.radians(-90.0), 'r_forearm_yaw': 0.0, 'r_wrist_pitch': 0.0, 'r_wrist_roll': 0.0, 'orbita_roll': 0.0, 'orbita_pitch': 0.0, 'orbita_yaw': 0.0, 'l_antenna_joint': np.radians(70.0), 'r_antenna_joint': np.radians(-70.0), 'l_gripper': 0.0, 'r_gripper': 0.0}
+               'r_arm_yaw': 0.0, 'r_elbow_pitch': np.radians(-90.0), 'r_forearm_yaw': 0.0, 'r_wrist_pitch': 0.0, 'r_wrist_roll': 0.0, 'orbita_roll': 0.0, 'orbita_pitch': 0.0, 'orbita_yaw': 0.0, 'l_antenna': np.radians(70.0), 'r_antenna': np.radians(-70.0), 'l_gripper': 0.0, 'r_gripper': 0.0}
 
 
 class MinimalPublisher(Node):
