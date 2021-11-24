@@ -35,7 +35,7 @@ import time
 import random
 
 JOINTS_NAMES = ['l_shoulder_pitch', 'l_shoulder_roll', 'l_arm_yaw', 'l_elbow_pitch', 'l_forearm_yaw', 'l_wrist_pitch', 'l_wrist_roll', 'r_shoulder_pitch', 'r_shoulder_roll',
-                'r_arm_yaw', 'r_elbow_pitch', 'r_forearm_yaw', 'r_wrist_pitch', 'r_wrist_roll', 'orbita_roll', 'orbita_pitch', 'orbita_yaw', 'l_antenna_joint', 'r_antenna_joint', 'l_gripper', 'r_gripper']
+                'r_arm_yaw', 'r_elbow_pitch', 'r_forearm_yaw', 'r_wrist_pitch', 'r_wrist_roll', 'orbita_roll', 'orbita_pitch', 'orbita_yaw', 'l_antenna', 'r_antenna', 'l_gripper', 'r_gripper']
 
 
 JOINTS_DICT = {'l_shoulder_pitch': 0.0, 'l_shoulder_roll': 0.0, 'l_arm_yaw': 0.0, 'l_elbow_pitch': np.radians(-90.0), 'l_forearm_yaw': 0.0, 'l_wrist_pitch': 0.0, 'l_wrist_roll': 0.0, 'r_shoulder_pitch': 0.0, 'r_shoulder_roll': 0.0,

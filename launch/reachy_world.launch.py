@@ -139,6 +139,23 @@ def generate_launch_description():
                      output='log',
                      arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'world', 'pedestal'])
 
+    robot_controllers = PathJoinSubstitution(
+        [
+            FindPackageShare("reachy_gazebo_ros2"),
+            "config",
+            "reachy_gazebo_controllers.yaml",
+        ]
+    )
+    control_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[robot_description, robot_controllers],
+        output={
+            "stdout": "screen",
+            "stderr": "screen",
+        },
+    )
+
     return LaunchDescription([
         # RegisterEventHandler(
         #     event_handler=OnProcessExit(
@@ -157,6 +174,7 @@ def generate_launch_description():
         spawn_jsb_controller,
         spawn_forward_controller,
         gazebo,
+        control_node,
         node_robot_state_publisher,
         static_tf,
 
