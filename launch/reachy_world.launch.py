@@ -22,6 +22,9 @@ from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEve
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 
+from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
+
 import xacro
 import yaml
 
@@ -87,16 +90,47 @@ def generate_launch_description():
                                    '-entity', 'reachy'],
                         output='screen')
 
-    load_joint_state_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_start_controller', 'joint_state_controller'],
-        output='screen'
+    # load_joint_state_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_start_controller', 'joint_state_controller'],
+    #     output='screen'
+    # )
+
+    # load_joint_trajectory_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_start_controller',
+    #          'joint_trajectory_controller'],
+    #     output='screen'
+    # )
+
+    reachy_controllers = PathJoinSubstitution(
+        [
+            FindPackageShare("reachy_gazebo_ros2"),
+            "config",
+            "reachy_gazebo_controllers.yaml",
+        ]
+    )
+    controller_manager_node = Node(
+        package="controller_manager",
+        executable="ros2_control_node",
+        parameters=[robot_description, reachy_controllers],
+        output={
+            "stdout": "screen",
+            "stderr": "screen",
+        },
     )
 
-    load_joint_trajectory_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_start_controller',
-             'joint_trajectory_controller'],
-        output='screen'
+    spawn_jsb_controller = Node(
+        package="controller_manager",
+        executable="spawner.py",
+        arguments=["joint_state_broadcaster"],
+        output="screen",
     )
+    spawn_forward_controller = Node(
+        package="controller_manager",
+        executable="spawner.py",
+        arguments=["forward_position_controller", "-c", "/controller_manager"],
+        output="screen",
+    )
+
 
     # Static TF
     static_tf = Node(package='tf2_ros',
@@ -106,20 +140,24 @@ def generate_launch_description():
                      arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'world', 'pedestal'])
 
     return LaunchDescription([
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=spawn_entity,
-                on_exit=[load_joint_state_controller],
-            )
-        ),
-        RegisterEventHandler(
-            event_handler=OnProcessExit(
-                target_action=load_joint_state_controller,
-                on_exit=[load_joint_trajectory_controller],
-            )
-        ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=spawn_entity,
+        #         on_exit=[load_joint_state_controller],
+        #     )
+        # ),
+        # RegisterEventHandler(
+        #     event_handler=OnProcessExit(
+        #         target_action=load_joint_state_controller,
+        #         on_exit=[load_joint_trajectory_controller],
+        #     )
+        # ),
+        spawn_entity,
+        controller_manager_node,
+        spawn_jsb_controller,
+        spawn_forward_controller,
         gazebo,
         node_robot_state_publisher,
         static_tf,
-        spawn_entity
+
     ])
