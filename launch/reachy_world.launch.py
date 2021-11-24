@@ -156,6 +156,25 @@ def generate_launch_description():
         },
     )
 
+    reachy_sdk_stuff = [
+        Node(
+            package='reachy_kinematics',
+            executable='orbita_kinematics_service',
+        ),
+        Node(
+            package='reachy_kinematics',
+            executable='arm_kinematics_service',
+        ),
+        Node(
+            package='reachy_controllers',
+            executable='mockup_controller',
+        ),
+        Node(
+            package='reachy_sdk_server',
+            executable='reachy_sdk_server',
+        ),
+    ]
+
     return LaunchDescription([
         # RegisterEventHandler(
         #     event_handler=OnProcessExit(
@@ -177,5 +196,4 @@ def generate_launch_description():
         control_node,
         node_robot_state_publisher,
         static_tf,
-
-    ])
+    ] + reachy_sdk_stuff)
