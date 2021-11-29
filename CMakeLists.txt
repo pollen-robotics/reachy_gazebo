@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(reachy_gazebo_ros2)
+project(reachy_gazebo)
 
 find_package(ament_cmake REQUIRED)
 

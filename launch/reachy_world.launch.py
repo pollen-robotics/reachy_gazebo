@@ -54,7 +54,7 @@ def load_yaml(package_name, file_path):
 def generate_launch_description():
     # moveit_cpp.yaml is passed by filename for now since it's node specific
     reachy_gazebo = os.path.join(
-        get_package_share_directory('reachy_gazebo_ros2'),
+        get_package_share_directory('reachy_gazebo'),
         'worlds',
         'reachy.world')
 
@@ -67,7 +67,7 @@ def generate_launch_description():
     )
 
     reachy_description_path = os.path.join(
-        get_package_share_directory('reachy_description_ros2'))
+        get_package_share_directory('reachy_description'))
 
     xacro_file = os.path.join(reachy_description_path,
                               'urdf',
@@ -103,7 +103,7 @@ def generate_launch_description():
 
     reachy_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("reachy_gazebo_ros2"),
+            FindPackageShare("reachy_gazebo"),
             "config",
             "reachy_gazebo_controllers.yaml",
         ]
@@ -141,7 +141,7 @@ def generate_launch_description():
 
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare("reachy_gazebo_ros2"),
+            FindPackageShare("reachy_gazebo"),
             "config",
             "reachy_gazebo_controllers.yaml",
         ]
@@ -157,10 +157,6 @@ def generate_launch_description():
     )
 
     reachy_sdk_stuff = [
-        Node(
-            package='reachy_kinematics',
-            executable='orbita_kinematics_service',
-        ),
         Node(
             package='reachy_kinematics',
             executable='arm_kinematics_service',
