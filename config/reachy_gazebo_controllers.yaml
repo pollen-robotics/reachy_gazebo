@@ -21,6 +21,7 @@ joint_trajectory_controller:
       - l_forearm_yaw
       - l_wrist_pitch
       - l_wrist_roll
+      - l_gripper
       - r_shoulder_pitch
       - r_shoulder_roll
       - r_arm_yaw
@@ -28,13 +29,12 @@ joint_trajectory_controller:
       - r_forearm_yaw
       - r_wrist_pitch
       - r_wrist_roll
-      - orbita_roll
-      - orbita_pitch
-      - orbita_yaw
+      - r_gripper
+      - neck_roll
+      - neck_pitch
+      - neck_yaw
       - l_antenna
       - r_antenna
-      - r_gripper
-      - l_gripper
     interface_name: position
 
 
@@ -48,6 +48,7 @@ forward_position_controller:
       - l_forearm_yaw
       - l_wrist_pitch
       - l_wrist_roll
+      - l_gripper
       - r_shoulder_pitch
       - r_shoulder_roll
       - r_arm_yaw
@@ -55,11 +56,10 @@ forward_position_controller:
       - r_forearm_yaw
       - r_wrist_pitch
       - r_wrist_roll
-      - orbita_roll
-      - orbita_pitch
-      - orbita_yaw
+      - r_gripper
+      - neck_roll
+      - neck_pitch
+      - neck_yaw
       - l_antenna
       - r_antenna
-      - r_gripper
-      - l_gripper
     interface_name: position

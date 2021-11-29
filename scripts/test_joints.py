@@ -35,11 +35,11 @@ import time
 import random
 
 JOINTS_NAMES = ['l_shoulder_pitch', 'l_shoulder_roll', 'l_arm_yaw', 'l_elbow_pitch', 'l_forearm_yaw', 'l_wrist_pitch', 'l_wrist_roll', 'r_shoulder_pitch', 'r_shoulder_roll',
-                'r_arm_yaw', 'r_elbow_pitch', 'r_forearm_yaw', 'r_wrist_pitch', 'r_wrist_roll', 'orbita_roll', 'orbita_pitch', 'orbita_yaw', 'l_antenna', 'r_antenna', 'l_gripper', 'r_gripper']
+                'r_arm_yaw', 'r_elbow_pitch', 'r_forearm_yaw', 'r_wrist_pitch', 'r_wrist_roll', 'neck_roll', 'neck_pitch', 'neck_yaw', 'l_antenna', 'r_antenna', 'l_gripper', 'r_gripper']
 
 
 JOINTS_DICT = {'l_shoulder_pitch': 0.0, 'l_shoulder_roll': 0.0, 'l_arm_yaw': 0.0, 'l_elbow_pitch': np.radians(-90.0), 'l_forearm_yaw': 0.0, 'l_wrist_pitch': 0.0, 'l_wrist_roll': 0.0, 'r_shoulder_pitch': 0.0, 'r_shoulder_roll': 0.0,
-               'r_arm_yaw': 0.0, 'r_elbow_pitch': np.radians(-90.0), 'r_forearm_yaw': 0.0, 'r_wrist_pitch': 0.0, 'r_wrist_roll': 0.0, 'orbita_roll': 0.0, 'orbita_pitch': 0.0, 'orbita_yaw': 0.0, 'l_antenna': np.radians(70.0), 'r_antenna': np.radians(-70.0), 'l_gripper': 0.0, 'r_gripper': 0.0}
+               'r_arm_yaw': 0.0, 'r_elbow_pitch': np.radians(-90.0), 'r_forearm_yaw': 0.0, 'r_wrist_pitch': 0.0, 'r_wrist_roll': 0.0, 'neck_roll': 0.0, 'neck_pitch': 0.0, 'neck_yaw': 0.0, 'l_antenna': np.radians(70.0), 'r_antenna': np.radians(-70.0), 'l_gripper': 0.0, 'r_gripper': 0.0}
 
 
 class MinimalPublisher(Node):

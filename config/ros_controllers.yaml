@@ -77,31 +77,31 @@ reachy:
   head_controller:
     type: effort_controllers/JointTrajectoryController
     joints:
-      - orbita_roll
-      - orbita_pitch
-      - orbita_yaw
+      - neck_roll
+      - neck_pitch
+      - neck_yaw
     gains:
-     orbita_roll: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
-     orbita_pitch: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
-     orbita_yaw: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     neck_roll: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     neck_pitch: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
+     neck_yaw: {p: 50.0, i: 0.000, d: 0.0, i_clamp: 1}
 
 
   # Simu Position Controllers ---------------------------------------
 
 
-  orbita_roll_position_controller:
+  neck_roll_position_controller:
     type: effort_controllers/JointPositionController
-    joint: orbita_roll
+    joint: neck_roll
     pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
 
-  orbita_pitch_position_controller:
+  neck_pitch_position_controller:
     type: effort_controllers/JointPositionController
-    joint: orbita_pitch
+    joint: neck_pitch
     pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
 
-  orbita_yaw_position_controller:
+  neck_yaw_position_controller:
     type: effort_controllers/JointPositionController
-    joint: orbita_yaw
+    joint: neck_yaw
     pid: {p: 50.0, i: 0.001, d: 1.0, i_clamp: 1}
 
 
@@ -228,6 +228,6 @@ controller_list:
     default: True
     type: FollowJointTrajectory
     joints:
-      - orbita_roll
-      - orbita_pitch
-      - orbita_yaw
+      - neck_roll
+      - neck_pitch
+      - neck_yaw
