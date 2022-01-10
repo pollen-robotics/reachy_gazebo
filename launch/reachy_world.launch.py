@@ -24,6 +24,7 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
 from launch_ros.substitutions import FindPackageShare
+import launch_ros.actions
 
 import xacro
 import yaml
@@ -60,6 +61,11 @@ def generate_launch_description():
 
     print(reachy_gazebo)
 
+    # simu_params = load_yaml('reachy_gazebo', 'config/simu.yaml')
+    simu_params = os.path.join(get_package_share_directory(
+        'reachy_gazebo'), 'config', 'simu.yaml')
+
+    print(simu_params)
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
@@ -82,13 +88,14 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        parameters=[robot_description]
+        parameters=[robot_description, simu_params]
     )
 
     spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
                         arguments=['-topic', 'robot_description',
                                    '-entity', 'reachy'],
-                        output='screen')
+                        output='screen',
+                        parameters=[simu_params])
 
     # load_joint_state_controller = ExecuteProcess(
     #     cmd=['ros2', 'control', 'load_start_controller', 'joint_state_controller'],
@@ -111,7 +118,7 @@ def generate_launch_description():
     controller_manager_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_description, reachy_controllers],
+        parameters=[robot_description, reachy_controllers, simu_params],
         output={
             "stdout": "screen",
             "stderr": "screen",
@@ -123,21 +130,25 @@ def generate_launch_description():
         executable="spawner.py",
         arguments=["joint_state_broadcaster"],
         output="screen",
+        parameters=[simu_params]
     )
     spawn_forward_controller = Node(
         package="controller_manager",
         executable="spawner.py",
         arguments=["forward_position_controller", "-c", "/controller_manager"],
         output="screen",
+        parameters=[simu_params]
     )
-
 
     # Static TF
     static_tf = Node(package='tf2_ros',
                      executable='static_transform_publisher',
                      name='static_transform_publisher',
                      output='log',
-                     arguments=['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', 'world', 'pedestal'])
+                     arguments=['0.0', '0.0', '0.0', '0.0',
+                                '0.0', '0.0', 'world', 'pedestal'],
+                     parameters=[simu_params]
+                     )
 
     robot_controllers = PathJoinSubstitution(
         [
@@ -149,7 +160,7 @@ def generate_launch_description():
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_description, robot_controllers],
+        parameters=[robot_description, robot_controllers, simu_params],
         output={
             "stdout": "screen",
             "stderr": "screen",
@@ -172,6 +183,7 @@ def generate_launch_description():
     ]
 
     return LaunchDescription([
+        launch_ros.actions.SetParameter(name='use_sim_time', value=True),
         # RegisterEventHandler(
         #     event_handler=OnProcessExit(
         #         target_action=spawn_entity,
