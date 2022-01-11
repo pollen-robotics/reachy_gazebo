@@ -1,0 +1,64 @@
+/arm_kinematics_service:
+  ros__parameters:
+    use_sim_time: True
+
+/controller_manager:
+  ros__parameters:
+    use_sim_time: True
+
+/controller_manager:
+  ros__parameters:
+    use_sim_time: True
+
+/depth_camera/intel_realsense_r200_depth_driver:
+  ros__parameters:
+    use_sim_time: True
+
+/forward_position_controller:
+  ros__parameters:
+    use_sim_time: True
+
+/gazebo:
+  ros__parameters:
+    use_sim_time: True
+
+/gazebo_ros2_control:
+  ros__parameters:
+    use_sim_time: True
+
+/joint_state_broadcaster:
+  ros__parameters:
+    use_sim_time: True
+
+/left_camera_controller:
+  ros__parameters:
+    use_sim_time: True
+
+/left_force_sensor/gazebo_ros_ft:
+  ros__parameters:
+    use_sim_time: True
+
+/mockup_controller:
+  ros__parameters:
+    use_sim_time: True
+
+/reachy_sdk_server:
+  ros__parameters:
+    use_sim_time: True
+
+/right_camera_controller:
+  ros__parameters:
+    use_sim_time: True
+
+/right_force_sensor/gazebo_ros_ft:
+  ros__parameters:
+    use_sim_time: True
+
+/robot_state_publisher:
+  ros__parameters:
+    use_sim_time: True
+    ignore_timestamp: True
+
+/static_transform_publisher:
+  ros__parameters:
+    use_sim_time: True

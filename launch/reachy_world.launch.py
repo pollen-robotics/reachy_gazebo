@@ -61,11 +61,10 @@ def generate_launch_description():
 
     print(reachy_gazebo)
 
-    # simu_params = load_yaml('reachy_gazebo', 'config/simu.yaml')
     simu_params = os.path.join(get_package_share_directory(
         'reachy_gazebo'), 'config', 'simu.yaml')
-
     print(simu_params)
+
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([os.path.join(
             get_package_share_directory('gazebo_ros'), 'launch'), '/gazebo.launch.py']),
@@ -88,14 +87,13 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        parameters=[robot_description, simu_params]
+        parameters=[robot_description]
     )
 
     spawn_entity = Node(package='gazebo_ros', executable='spawn_entity.py',
                         arguments=['-topic', 'robot_description',
                                    '-entity', 'reachy'],
-                        output='screen',
-                        parameters=[simu_params])
+                        output='screen')
 
     # load_joint_state_controller = ExecuteProcess(
     #     cmd=['ros2', 'control', 'load_start_controller', 'joint_state_controller'],
@@ -118,7 +116,7 @@ def generate_launch_description():
     controller_manager_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_description, reachy_controllers, simu_params],
+        parameters=[robot_description, reachy_controllers],
         output={
             "stdout": "screen",
             "stderr": "screen",
@@ -129,15 +127,13 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner.py",
         arguments=["joint_state_broadcaster"],
-        output="screen",
-        parameters=[simu_params]
+        output="screen"
     )
     spawn_forward_controller = Node(
         package="controller_manager",
         executable="spawner.py",
         arguments=["forward_position_controller", "-c", "/controller_manager"],
-        output="screen",
-        parameters=[simu_params]
+        output="screen"
     )
 
     # Static TF
@@ -146,8 +142,7 @@ def generate_launch_description():
                      name='static_transform_publisher',
                      output='log',
                      arguments=['0.0', '0.0', '0.0', '0.0',
-                                '0.0', '0.0', 'world', 'pedestal'],
-                     parameters=[simu_params]
+                                '0.0', '0.0', 'world', 'pedestal']
                      )
 
     robot_controllers = PathJoinSubstitution(
@@ -160,11 +155,17 @@ def generate_launch_description():
     control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_description, robot_controllers, simu_params],
+        parameters=[robot_description, robot_controllers],
         output={
             "stdout": "screen",
             "stderr": "screen",
         },
+    )
+
+    params_node = Node(
+        package="reachy_gazebo",
+        executable="set_params.py",
+        arguments=[f'{simu_params}']
     )
 
     reachy_sdk_stuff = [
@@ -204,4 +205,5 @@ def generate_launch_description():
         control_node,
         node_robot_state_publisher,
         static_tf,
+        params_node
     ] + reachy_sdk_stuff)
