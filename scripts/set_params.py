@@ -25,7 +25,7 @@ from rcl_interfaces.msg import Parameter, ParameterValue, SetParametersResult, P
 from rclpy import parameter
 import yaml
 import argparse
-
+import time
 # from threading import Thread
 
 
@@ -53,10 +53,15 @@ class ParameterManager(Node):
             self.node_list.append(p)
 
         # print(f'NODES: {self.node_list}')
-        self.get_logger().info(f'NODES: {self.node_list}')
 
         self.futures = {}
         self.client_dict = {}
+
+        time.sleep(3)
+        self.get_logger().warn(f'Setting parametersa')
+
+        self.get_logger().info(f'NODES: {self.node_list}')
+
         for n in self.node_list:
             if (not "dummy_parameter_manager_node" in n) and (not "ros2cli_daemon" in n):
 
@@ -169,7 +174,7 @@ def main(args=None):
                 parammanager.get_logger().info(
                     f'\t missing: {n}')
 
-    print(f'All set')
+    parammanager.get_logger().warn(f'All set')
     parammanager.destroy_node()
     rclpy.shutdown()
 
